@@ -1,0 +1,25 @@
+{
+  "name": "smartedu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasitdeveloper/SmartEDU.git"
+  },
+  "author": "Fahreddin Raşit KILIÇ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rasitdeveloper/SmartEDU/issues"
+  },
+  "homepage": "https://github.com/rasitdeveloper/SmartEDU#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
