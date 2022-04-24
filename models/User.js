@@ -10,14 +10,21 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
-      type: String,
-      required: true
-  }
+    type: String,
+    required: true,
+  },
 });
 
+UserSchema.pre('save', function (next) {
+  const user = this;
+  bcrypt.hash(user.password, 10, (error, hash) => {
+    user.password = hash;
+    next(); // for the next middleware
+  });
+});
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
