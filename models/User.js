@@ -26,12 +26,28 @@ const UserSchema = new Schema({
     ref:'Course'
   }]
 });
-
+/*
 UserSchema.pre('save', function (next) {
   const user = this;
   bcrypt.hash(user.password, 10, (error, hash) => {
     user.password = hash;
     next(); // for the next middleware
+  });
+});
+*/
+
+// https://stackoverflow.com/questions/43706606/how-to-prevent-mongoose-from-rehashing-the-user-passwords-after-modifying-a-user
+UserSchema.pre('save', function(next) {
+  const user = this;
+  if (!user.isModified('password')) return next();
+
+  bcrypt.genSalt(10, function(err, salt) {
+      if (err) return next(err);
+      bcrypt.hash(user.password, salt, function(err, hash) {
+          if (err) return next(err);
+          user.password = hash;
+          next();
+      });
   });
 });
 
