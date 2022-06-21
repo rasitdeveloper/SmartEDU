@@ -10,15 +10,18 @@ const pageRoute = require('./routes/pageRoute');
 const courseRoute = require('./routes/courseRoute');
 const categoryRoute = require('./routes/categoryRoute');
 const userRoute = require('./routes/userRoute');
+require('dotenv').config()
 
 const app = express();
 
 //connect db
-mongoose.connect('mongodb://localhost/smartedu-db', {
+mongoose.connect(`mongodb+srv://rasit:${process.env.DBKEY}@cluster0.s5dmwki.mongodb.net/smartedu?retryWrites=true&w=majority`, {
   useUnifiedTopology: true
 }).then(() => {
   console.log('DB Connected Successfuly')
-});
+}).catch((error) => {
+  console.log('DB Connect Failed')
+})
 
 //template engine
 app.set("view engine", "ejs");
@@ -56,7 +59,7 @@ app.use('/courses', courseRoute);
 app.use('/categories', categoryRoute);
 app.use('/users', userRoute);
 
-const port = 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`App started on port ${port}`);
 });
